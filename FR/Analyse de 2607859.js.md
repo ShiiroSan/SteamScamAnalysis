@@ -1,4 +1,4 @@
-Afin de simplifier l'appelation, le fichier de-obfusqué et analysé sera disponible [ici](..\source%20code\cleaned\script2.js).
+Afin de simplifier l'appelation, le fichier de-obfusqué et analysé sera disponible [ici](https://github.com/ShiiroSan/SteamScamAnalysis/blob/master\source%20code/cleaned/script2.js).
 
 ## Architecture du code
 
