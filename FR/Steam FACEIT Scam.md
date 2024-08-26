@@ -11,7 +11,7 @@ Un "write-up" sur le nouveau scam prenant de plus en plus d'ampleurs sur Steam. 
 Un contact m'ajoute sur Steam et me propose de rejoindre sa team *FACEIT[^1]*. 
 Pour se faire, je n'ai qu'à aller sur l'URL suivante : https://faceit.pixel-panthers.com (*le lien est maintenant mort*), faire une connexion via la page Steam et je pourrais rejoindre son groupe. 
 
-![Pasted image 20240814182409.png](..\assets\Pasted%20image%2020240814182409.png)
+![Pasted image 20240814182409.png](https://github.com/ShiiroSan/SteamScamAnalysis/blob/master/assets/Pasted%20image%2020240814182409.png)
 
 ## Du point de vue d'un utilisateur lambda
 
@@ -19,20 +19,20 @@ Une fois le site ouvert, on est accueil par un popup s'assurant que l'on doit li
 
 Le bouton *Close* en haut nous mène vers le vrai site contenant un bouton "Confirm" (qui ramène vers le popup). 
 
-![Pasted image 20240814183118.png](..\assets\Pasted%20image%2020240814183118.png)
+![Pasted image 20240814183118.png](https://github.com/ShiiroSan/SteamScamAnalysis/blob/master/assets/Pasted%20image%2020240814183118.png)
 Cliquer sur *Terms & Conditions* et *Privacy Policy* ramène vers les termes et la privacy policy de FACEIT. 
 Le reste de la page n'est que du texte sans grand intérêt, avec le minimum d'interaction possible. 
 
 Revenons donc au popup. Sur le popup, l'appuie sur *Terms & Conditions* ou *Contact FACEIT Support* mène vers les vraies pages FACEIT. 
 Un appui sur le bouton *VERIFY CS2 & GET PLAYER ID* quant à lui ouvre une page de connexion Steam afin de lié son compte Steam à *FACEIT*. 
-![Pasted image 20240814183649.png](..\assets\Pasted%20image%2020240814183649.png)
+![Pasted image 20240814183649.png](https://github.com/ShiiroSan/SteamScamAnalysis/blob/master/assets/Pasted%20image%2020240814183649.png)
 
 Ce popup ressemble en tout point au popup d'authentification via des services tiers qui peuvent exister. La moindre interaction avec un lien sur le popup redirige vers la vraie page Steam affilié. Le QR code défile correctement. 
 La lecture du code QR avec un QR scanner redirige réellement vers un lien de connexion Steam. En apparence, la page semble correct. 
 Essayons de se connecter avec un compte Steam fraichement créer pour voir ce qu'il se passe. 
-![Pasted image 20240814184654.png](..\assets\Pasted%20image%2020240814184654.png)
+![Pasted image 20240814184654.png](https://github.com/ShiiroSan/SteamScamAnalysis/blob/master/assets/Pasted%20image%2020240814184654.png)
 La page *FACEIT* nous informe qu'il faut renseigner le code 2FA pour pouvoir valider la connexion. Un mail a bien été reçu contenant le code 2FA, ainsi qu'une approximation de l'endroit de connexion
-![Pasted image 20240814184801.png](..\assets\Pasted%20image%2020240814184801.png)
+![Pasted image 20240814184801.png](https://github.com/ShiiroSan/SteamScamAnalysis/blob/master/assets/Pasted%20image%2020240814184801.png)
 Le mail est un véritable mail de connexion Steam, provenant bien d'une adresse officiel de Steam. Pas de soucis de ce côté. 
 Néanmoins, renseigner le code à 2FA indique sur le site une erreur comme quoi le code est incorrect. Une tentative de régénération du code produit la même erreur. 
 
@@ -52,20 +52,20 @@ Ah bon? Dans ce cas, regardons le contenu du site en détail.
 ### DevTools
 
 L'ouverture du DevTools de Chrome nous notifie d'entrée de jeu qu'une fonctionne détecte l'utilisation du *Debugger*.
-![Pasted image 20240814190606.png](..\assets\Pasted%20image%2020240814190606.png)
+![Pasted image 20240814190606.png](https://github.com/ShiiroSan/SteamScamAnalysis/blob/master/assets/Pasted%20image%2020240814190606.png)
 La page s'en trouve du coup, "mise en pause". Aucune interaction n'est possible avec cette dernière tant que le debugger est ouvert. Il s'agit d'une protection assez courante afin d'éviter les analyses "à chaud". Cela n'est néanmoins pas un problème, l'analyse "à froid" étant toujours possible. 
 
 #### Analyse à froid
 
 L'ouverture du DevTools mets en évidence diverses éléments présents intriguant. 
-![Pasted image 20240814190941.png](..\assets\Pasted%20image%2020240814190941.png)
+![Pasted image 20240814190941.png](https://github.com/ShiiroSan/SteamScamAnalysis/blob/master/assets/Pasted%20image%2020240814190941.png)
 
  > 
  > \[!NOTE\]
  > Les éléments de code source seront présent dans le dossier à la racine du repo, dans le dossier source code. Le code source obfusqué sera disponible dans le dossier "obfuscated", une version dés-obfuscaté, déminifé et analysé sera dispo dans le dossier "cleaned". 
 
 Chacun des 3 fichiers JS ne contiennent que du code minifié[^2] et obfusqué[^3]. 
-![Pasted image 20240814191636.png](..\assets\Pasted%20image%2020240814191636.png)
+![Pasted image 20240814191636.png](https://github.com/ShiiroSan/SteamScamAnalysis/blob/master/assets/Pasted%20image%2020240814191636.png)
 L'analyse du code source de la page principale révèle plusieurs éléments intéressant malgré l'obfuscation de la page. 
 
 ````html
@@ -102,7 +102,7 @@ L'analyse du code source de la page principale révèle plusieurs éléments int
 ````
 
 En excluant les éléments d'encryption, le bout de code permet la création d'une page ayant pour nom "Steam Community - Mozilla Firefox". On peut même voir un champ de type *input* ayant pour value une URL commençant par *steamcommunity.com/\[...\]*. 
-![Pasted image 20240814193516.png](..\assets\Pasted%20image%2020240814193516.png)
+![Pasted image 20240814193516.png](https://github.com/ShiiroSan/SteamScamAnalysis/blob/master/assets/Pasted%20image%2020240814193516.png)
 On peut donc assez aisément en déduire que la page de "connexion" provenant de Steam est directement créer par le site.
 Et il est là, le vecteur d'attaque ! Ce qui, en apparence, ressemblait à une page de connexion réel de Steam, en prenant même l'aspect de type popup n'était qu'une page créer dynamiquement sur le site. Plusieurs éléments permettait de mettre cela en visibilité, même sans se fié au code source de la page. 
 Premièrement, il était impossible de modifier la taille du popup ou de déplacer la popup. Elle était fix. Deuxièmement, il était possible d'interagir avec le contenu de la page derrière sans pour autant que le popup disparaisse. 
@@ -124,7 +124,7 @@ Afin de fluidifier la lecture, chaque analyse de fichier aura droit à une page 
 
 ## Résumé du fonctionnement de la page de phishing
 
-![Pasted image 20240826164125.png](..\assets\Pasted%20image%2020240826164125.png)
+![Pasted image 20240826164125.png](https://github.com/ShiiroSan/SteamScamAnalysis/blob/master/assets/Pasted%20image%2020240826164125.png)
 
 * Le site prends l'apparence d'une page de groupe FACEIT et nous demande de nous connecter via une page OAuth Steam. 
 * Cette page OAuth est créer par le site en lui même pour faire croire qu'il s'agit d'une vraie page de Steam. 
