@@ -132,7 +132,7 @@ Afin de fluidifier la lecture, chaque analyse de fichier aura droit à une page 
 
 ### Par rapport à la création du popup
 
-* Le cadenas "HTTPS" n'est qu'une image mise
+* Le cadenas "HTTPS" n'est qu'une image, et non un véritable cadenas
 * Le titre du popup change pour s'adapter en fonction du navigateur utilisé
 * Le lien du popup génère une apparence similaire à un véritable popup Steam en intégrant de faux paramètres à l'URL
 * Les différents liens sur le popup redirigent réellement vers le contenu du site officiel
